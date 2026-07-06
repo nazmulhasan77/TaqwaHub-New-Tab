@@ -2,19 +2,107 @@ import type { PrayerTimes, Settings } from '../types';
 import { aladhanDate, dateKey } from '../utils/dateUtils';
 import { getStored, setStored } from './storageService';
 
+function applyHijriAdjustment(prayerTimes: PrayerTimes, adjustment: number): PrayerTimes {
+  const result = { ...prayerTimes, hijri: { ...prayerTimes.hijri } };
+  
+  // Manually adjust hijri date
+  let adjustedDay = result.hijri.day + adjustment;
+  let adjustedMonthNumber = result.hijri.monthNumber;
+  let adjustedYear = result.hijri.year;
+  let adjustedMonthEn = result.hijri.month;
+  
+  // Handle month/year transitions
+  const hijriMonths = [
+    { number: 1, en: "Muharram", days: 29 },
+    { number: 2, en: "Safar", days: 30 },
+    { number: 3, en: "Rabi' al-Awwal", days: 29 },
+    { number: 4, en: "Rabi' al-Thani", days: 30 },
+    { number: 5, en: "Jumada al-Awwal", days: 29 },
+    { number: 6, en: "Jumada al-Thani", days: 30 },
+    { number: 7, en: "Rajab", days: 29 },
+    { number: 8, en: "Sha'ban", days: 30 },
+    { number: 9, en: "Ramadan", days: 29 },
+    { number: 10, en: "Shawwal", days: 30 },
+    { number: 11, en: "Dhu al-Qi'dah", days: 29 },
+    { number: 12, en: "Dhu al-Hijjah", days: 30 }
+  ];
+  
+  // Helper function to get month safely
+  const getMonth = (monthNum: number) => {
+    return hijriMonths.find(m => m.number === monthNum) || hijriMonths[0];
+  };
+  
+  // Adjust backwards
+  while (adjustedDay < 1) {
+    adjustedMonthNumber--;
+    if (adjustedMonthNumber < 1) {
+      adjustedMonthNumber = 12;
+      adjustedYear--;
+    }
+    const month = getMonth(adjustedMonthNumber);
+    adjustedMonthEn = month.en;
+    adjustedDay += month.days;
+  }
+  
+  // Adjust forwards
+  let currentMonth = getMonth(adjustedMonthNumber);
+  while (adjustedDay > currentMonth.days) {
+    adjustedDay -= currentMonth.days;
+    adjustedMonthNumber++;
+    if (adjustedMonthNumber > 12) {
+      adjustedMonthNumber = 1;
+      adjustedYear++;
+    }
+    const nextMonth = getMonth(adjustedMonthNumber);
+    adjustedMonthEn = nextMonth.en;
+    currentMonth = nextMonth;
+  }
+  
+  result.hijri = {
+    day: adjustedDay,
+    month: adjustedMonthEn,
+    monthNumber: adjustedMonthNumber,
+    year: adjustedYear
+  };
+  
+  return result;
+}
+
 function cacheKey(settings: Settings, date = new Date()) {
+  if (settings.autoLocationEnabled && settings.latitude && settings.longitude) {
+    return `prayer:${dateKey(date)}:${settings.latitude}:${settings.longitude}:${settings.method}`;
+  }
   return `prayer:${dateKey(date)}:${settings.city.toLowerCase()}:${settings.country.toLowerCase()}:${settings.method}`;
 }
 
 export async function getPrayerTimes(settings: Settings): Promise<{ data: PrayerTimes; warning?: string }> {
   const key = cacheKey(settings);
   const cached = await getStored<PrayerTimes | null>(key, null);
-  if (cached) return { data: { ...cached, source: 'cache' } };
+  if (cached) {
+    let dataWithCustom = applyHijriAdjustment(cached, settings.hijriAdjustment);
+    // Apply custom prayer times
+    Object.entries(settings.customPrayerTimes).forEach(([prayer, time]) => {
+      if (time) {
+        dataWithCustom.timings[prayer as keyof typeof dataWithCustom.timings] = time;
+      }
+    });
+    return { data: dataWithCustom };
+  }
 
-  const url = new URL(`https://api.aladhan.com/v1/timingsByCity/${aladhanDate()}`);
-  url.searchParams.set('city', settings.city);
-  url.searchParams.set('country', settings.country);
-  url.searchParams.set('method', String(settings.method));
+  let url: URL;
+  if (settings.autoLocationEnabled && settings.latitude && settings.longitude) {
+    url = new URL(`https://api.aladhan.com/v1/timings/${aladhanDate()}`);
+    url.searchParams.set('latitude', String(settings.latitude));
+    url.searchParams.set('longitude', String(settings.longitude));
+    url.searchParams.set('method', String(settings.method));
+    url.searchParams.set('adjustment', String(settings.hijriAdjustment));
+  } else {
+    url = new URL(`https://api.aladhan.com/v1/timingsByCity/${aladhanDate()}`);
+    url.searchParams.set('city', settings.city);
+    url.searchParams.set('country', settings.country);
+    url.searchParams.set('method', String(settings.method));
+    url.searchParams.set('adjustment', String(settings.hijriAdjustment));
+  }
 
   try {
     const response = await fetch(url);
@@ -22,7 +110,8 @@ export async function getPrayerTimes(settings: Settings): Promise<{ data: Prayer
     const json = await response.json();
     const timings = json.data.timings;
     const hijri = json.data.date.hijri;
-    const data: PrayerTimes = {
+    
+    let data: PrayerTimes = {
       dateKey: dateKey(),
       city: settings.city,
       country: settings.country,
@@ -45,12 +134,33 @@ export async function getPrayerTimes(settings: Settings): Promise<{ data: Prayer
       gregorianDate: json.data.date.readable,
       source: 'api'
     };
-    await setStored(key, data);
-    await setStored('lastPrayerTimes', data);
-    return { data };
+    
+    // Store unadjusted, raw data in cache (without custom prayer times)
+    const dataToStore = { ...data };
+    await setStored(key, dataToStore);
+    await setStored('lastPrayerTimes', dataToStore);
+    
+    // Apply hijri adjustment first
+    let finalData = applyHijriAdjustment(data, settings.hijriAdjustment);
+    // Then apply custom prayer times
+    Object.entries(settings.customPrayerTimes).forEach(([prayer, time]) => {
+      if (time) {
+        finalData.timings[prayer as keyof typeof finalData.timings] = time;
+      }
+    });
+    
+    return { data: finalData };
   } catch (error) {
     const last = await getStored<PrayerTimes | null>('lastPrayerTimes', null);
-    if (last) return { data: { ...last, source: 'cache' }, warning: 'Using cached prayer times. Refresh when internet is available.' };
+    if (last) {
+      let dataWithCustom = applyHijriAdjustment(last, settings.hijriAdjustment);
+      Object.entries(settings.customPrayerTimes).forEach(([prayer, time]) => {
+        if (time) {
+          dataWithCustom.timings[prayer as keyof typeof dataWithCustom.timings] = time;
+        }
+      });
+      return { data: dataWithCustom, warning: 'Using cached prayer times. Refresh when internet is available.' };
+    }
     throw error;
   }
 }

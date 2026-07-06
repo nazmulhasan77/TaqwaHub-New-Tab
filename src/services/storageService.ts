@@ -3,7 +3,7 @@ import type { Settings } from '../types';
 export const defaultSettings: Settings = {
   city: 'Dhaka',
   country: 'Bangladesh',
-  method: 1,
+  method: 3,
   language: 'en',
   timeFormat: '12h',
   clockMode: 'analog',
@@ -11,7 +11,18 @@ export const defaultSettings: Settings = {
   notificationMinutes: 10,
   showQuran: true,
   showHadith: true,
-  showProductivity: true
+  showProductivity: true,
+  autoLocationEnabled: false,
+  latitude: null,
+  longitude: null,
+  customPrayerTimes: {
+    Fajr: null,
+    Dhuhr: null,
+    Asr: null,
+    Maghrib: null,
+    Isha: null
+  },
+  hijriAdjustment: -1
 };
 
 const hasChromeStorage = () => typeof chrome !== 'undefined' && Boolean(chrome.storage?.local);

@@ -30,7 +30,6 @@ export default function AnalogClock({ now, clockMode, onClockModeChange }: Props
             <span
               key={index}
               className={index % 5 === 0 ? 'tick major' : 'tick'}
-              style={{ transform: `rotate(${index * 6}deg) translateY(-150px)` }}
             />
           ))}
           <span className="hand hour" style={{ transform: `rotate(${hours * 30}deg)` }} />

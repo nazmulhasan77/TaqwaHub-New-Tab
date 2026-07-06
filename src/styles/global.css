@@ -179,6 +179,8 @@ textarea {
     0 0 0 5px rgba(255, 255, 255, 0.1),
     0 24px 60px rgba(0, 0, 0, 0.6),
     inset 0 0 40px rgba(0, 0, 0, 0.4);
+  --clock-radius: 150px;
+  --clock-diameter: 300px;
 }
 
 .tick {
@@ -187,9 +189,71 @@ textarea {
   top: 50%;
   width: 2px;
   height: 12px;
-  transform-origin: 1px 150px;
+  transform-origin: 1px var(--clock-radius);
   background: rgba(255, 255, 255, 0.3);
+  transform: translateY(calc(var(--clock-radius) * -1));
 }
+
+.tick:nth-child(1) { transform: rotate(6deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(2) { transform: rotate(12deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(3) { transform: rotate(18deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(4) { transform: rotate(24deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(5) { transform: rotate(30deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(6) { transform: rotate(36deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(7) { transform: rotate(42deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(8) { transform: rotate(48deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(9) { transform: rotate(54deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(10) { transform: rotate(60deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(11) { transform: rotate(66deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(12) { transform: rotate(72deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(13) { transform: rotate(78deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(14) { transform: rotate(84deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(15) { transform: rotate(90deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(16) { transform: rotate(96deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(17) { transform: rotate(102deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(18) { transform: rotate(108deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(19) { transform: rotate(114deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(20) { transform: rotate(120deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(21) { transform: rotate(126deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(22) { transform: rotate(132deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(23) { transform: rotate(138deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(24) { transform: rotate(144deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(25) { transform: rotate(150deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(26) { transform: rotate(156deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(27) { transform: rotate(162deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(28) { transform: rotate(168deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(29) { transform: rotate(174deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(30) { transform: rotate(180deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(31) { transform: rotate(186deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(32) { transform: rotate(192deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(33) { transform: rotate(198deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(34) { transform: rotate(204deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(35) { transform: rotate(210deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(36) { transform: rotate(216deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(37) { transform: rotate(222deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(38) { transform: rotate(228deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(39) { transform: rotate(234deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(40) { transform: rotate(240deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(41) { transform: rotate(246deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(42) { transform: rotate(252deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(43) { transform: rotate(258deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(44) { transform: rotate(264deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(45) { transform: rotate(270deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(46) { transform: rotate(276deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(47) { transform: rotate(282deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(48) { transform: rotate(288deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(49) { transform: rotate(294deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(50) { transform: rotate(300deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(51) { transform: rotate(306deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(52) { transform: rotate(312deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(53) { transform: rotate(318deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(54) { transform: rotate(324deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(55) { transform: rotate(330deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(56) { transform: rotate(336deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(57) { transform: rotate(342deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(58) { transform: rotate(348deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(59) { transform: rotate(354deg) translateY(calc(var(--clock-radius) * -1)); }
+.tick:nth-child(60) { transform: rotate(360deg) translateY(calc(var(--clock-radius) * -1)); }
 
 .tick.major {
   height: 20px;
@@ -1008,10 +1072,42 @@ label input[type="checkbox"] {
   .analog-clock {
     width: 220px;
     height: 220px;
+    --clock-radius: 101px;
+    --clock-diameter: 220px;
   }
 
-  .analog-clock .tick {
-    transform-origin: 1px 101px;
+  .tick {
+    height: 9px;
+  }
+
+  .tick.major {
+    height: 16px;
+  }
+
+  .hand.hour {
+    width: 6px;
+    height: 55px;
+    margin-left: -3px;
+  }
+
+  .hand.minute {
+    width: 4px;
+    height: 78px;
+    margin-left: -2px;
+  }
+
+  .hand.second {
+    width: 2px;
+    height: 90px;
+    margin-left: -1px;
+  }
+
+  .clock-pin {
+    width: 16px;
+    height: 16px;
+    margin-left: -8px;
+    margin-top: -8px;
+    border-width: 3px;
   }
 
   .salah-hero {
@@ -1060,6 +1156,7 @@ label input[type="checkbox"] {
 @media (max-width: 860px) {
   .app-shell {
     padding: 18px;
+    overflow-y: auto;
   }
 
   .app-header {
@@ -1067,7 +1164,12 @@ label input[type="checkbox"] {
     margin-bottom: 12px;
   }
 
-  .newtab-grid,
+  .newtab-grid {
+    height: auto;
+    grid-template-columns: 1fr;
+    grid-template-areas: none;
+  }
+
   .bottom-row,
   .salah-top,
   .next-prayer-band,
@@ -1093,9 +1195,88 @@ label input[type="checkbox"] {
   .analog-clock {
     width: 220px;
     height: 220px;
+    --clock-radius: 101px;
+    --clock-diameter: 220px;
   }
 
-  .analog-clock .tick {
-    transform-origin: 1px 101px;
+  .tick {
+    height: 9px;
+  }
+
+  .tick.major {
+    height: 16px;
+  }
+
+  .hand.hour {
+    width: 6px;
+    height: 55px;
+    margin-left: -3px;
+  }
+
+  .hand.minute {
+    width: 4px;
+    height: 78px;
+    margin-left: -2px;
+  }
+
+  .hand.second {
+    width: 2px;
+    height: 90px;
+    margin-left: -1px;
+  }
+
+  .clock-pin {
+    width: 16px;
+    height: 16px;
+    margin-left: -8px;
+    margin-top: -8px;
+    border-width: 3px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 500px) {
+  .analog-clock {
+    width: 180px;
+    height: 180px;
+    --clock-radius: 83px;
+    --clock-diameter: 180px;
+  }
+
+  .tick {
+    height: 7px;
+  }
+
+  .tick.major {
+    height: 12px;
+  }
+
+  .hand.hour {
+    width: 5px;
+    height: 45px;
+    margin-left: -2.5px;
+  }
+
+  .hand.minute {
+    width: 3px;
+    height: 64px;
+    margin-left: -1.5px;
+  }
+
+  .hand.second {
+    width: 1.5px;
+    height: 74px;
+    margin-left: -0.75px;
+  }
+
+  .clock-pin {
+    width: 14px;
+    height: 14px;
+    margin-left: -7px;
+    margin-top: -7px;
+    border-width: 3px;
   }
 }

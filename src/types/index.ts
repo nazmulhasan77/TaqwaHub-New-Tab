@@ -13,6 +13,11 @@ export interface Settings {
   showQuran: boolean;
   showHadith: boolean;
   showProductivity: boolean;
+  autoLocationEnabled: boolean;
+  latitude: number | null;
+  longitude: number | null;
+  customPrayerTimes: Record<PrayerName, string | null>;
+  hijriAdjustment: number;
 }
 
 export interface HijriDate {

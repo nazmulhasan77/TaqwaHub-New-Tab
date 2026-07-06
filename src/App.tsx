@@ -56,6 +56,27 @@ export default function App() {
   }, [today, hourKey]);
 
   useEffect(() => {
+    if (settings.autoLocationEnabled && (!settings.latitude || !settings.longitude)) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            const newSettings = {
+              ...settings,
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude
+            };
+            setSettings(newSettings);
+            await setStored('settings', newSettings);
+          },
+          (error) => {
+            console.error('Geolocation error:', error);
+          }
+        );
+      }
+    }
+  }, [settings.autoLocationEnabled, settings.latitude, settings.longitude]);
+
+  useEffect(() => {
     void setStored('settings', settings);
     void (async () => {
       try {
