@@ -167,6 +167,12 @@ export default function App() {
       )}
 
       <SettingsModal open={settingsOpen} settings={settings} onClose={() => setSettingsOpen(false)} onSave={updateSettings} />
+      
+      <footer className="app-footer">
+        <p>
+          Developed by: <a href="https://www.facebook.com/butterflydevs/" target="_blank" rel="noopener noreferrer">Butterfly Devs</a>
+        </p>
+      </footer>
     </main>
   );
 }
