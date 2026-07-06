@@ -155,7 +155,6 @@ textarea {
 .newtab-grid {
   width: min(1460px, 100%);
   flex: 1;
-  overflow-y: auto;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 300px minmax(620px, 1fr) 310px;
@@ -164,7 +163,7 @@ textarea {
     "left center right";
   gap: 22px;
   align-items: start;
-  padding-bottom: 10px;
+  overflow: hidden;
 }
 
 .left-rail {
