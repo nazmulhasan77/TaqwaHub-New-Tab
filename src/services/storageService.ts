@@ -1,4 +1,4 @@
-import type { Settings } from '../types';
+import type { Settings, BackgroundTheme } from '../types';
 
 export const defaultSettings: Settings = {
   city: 'Dhaka',
@@ -22,7 +22,8 @@ export const defaultSettings: Settings = {
     Maghrib: null,
     Isha: null
   },
-  hijriAdjustment: -1
+  hijriAdjustment: -1,
+  backgroundTheme: 'default'
 };
 
 const hasChromeStorage = () => typeof chrome !== 'undefined' && Boolean(chrome.storage?.local);

@@ -37,6 +37,22 @@ export default function App() {
   const today = dateKey(now);
   const hourKey = now.toISOString().slice(0, 13);
 
+  // Apply background theme
+  useEffect(() => {
+    // Remove all existing theme classes
+    document.body.classList.remove(
+      'theme-ocean',
+      'theme-forest',
+      'theme-sunset',
+      'theme-midnight'
+    );
+    
+    // Add current theme class if not default
+    if (settings.backgroundTheme !== 'default') {
+      document.body.classList.add(`theme-${settings.backgroundTheme}`);
+    }
+  }, [settings.backgroundTheme]);
+
   useEffect(() => {
     const id = window.setInterval(() => setNow(new Date()), 1000);
     return () => window.clearInterval(id);

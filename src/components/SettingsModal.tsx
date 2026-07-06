@@ -1,4 +1,4 @@
-import type { Settings } from '../types';
+import type { Settings, BackgroundTheme } from '../types';
 import LanguageToggle from './LanguageToggle';
 import { clearAllStored } from '../services/storageService';
 
@@ -31,6 +31,14 @@ const CALCULATION_METHODS = [
   { value: 27, label: 'Ministry of Religious Affairs, Bosnia and Herzegovina' },
   { value: 28, label: 'Islamic Community of the Republic of Slovenia' },
   { value: 99, label: 'Custom' },
+];
+
+const BACKGROUND_THEMES: { value: BackgroundTheme; label: string }[] = [
+  { value: 'default', label: 'Default' },
+  { value: 'ocean', label: 'Ocean' },
+  { value: 'forest', label: 'Forest' },
+  { value: 'sunset', label: 'Sunset' },
+  { value: 'midnight', label: 'Midnight' },
 ];
 
 interface Props {
@@ -109,6 +117,15 @@ export default function SettingsModal({ open, settings, onClose, onSave }: Props
           <label>Hijri Date Adjustment<input type="number" value={settings.hijriAdjustment} onChange={(e) => update('hijriAdjustment', Number(e.target.value))} /></label>
           <label>Prayer Alert<select value={settings.notificationMinutes} onChange={(e) => update('notificationMinutes', Number(e.target.value))}><option value={5}>5 min</option><option value={10}>10 min</option><option value={15}>15 min</option></select></label>
           <label>Clock Mode<select value={settings.clockMode} onChange={(e) => update('clockMode', e.target.value as Settings['clockMode'])}><option value="digital">Digital</option><option value="analog">Analog</option></select></label>
+          <label>Background Theme
+            <select value={settings.backgroundTheme} onChange={(e) => update('backgroundTheme', e.target.value as BackgroundTheme)}>
+              {BACKGROUND_THEMES.map((theme) => (
+                <option key={theme.value} value={theme.value}>
+                  {theme.label}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
         
         <h4 style={{ margin: '20px 0 10px' }}>Custom Prayer Times (Jamaat)</h4>

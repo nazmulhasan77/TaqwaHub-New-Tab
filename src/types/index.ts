@@ -1,6 +1,8 @@
 export type Language = 'en' | 'bn';
 export type PrayerName = 'Fajr' | 'Dhuhr' | 'Asr' | 'Maghrib' | 'Isha';
 
+export type BackgroundTheme = 'default' | 'ocean' | 'forest' | 'sunset' | 'midnight';
+
 export interface Settings {
   city: string;
   country: string;
@@ -18,6 +20,7 @@ export interface Settings {
   longitude: number | null;
   customPrayerTimes: Record<PrayerName, string | null>;
   hijriAdjustment: number;
+  backgroundTheme: BackgroundTheme;
 }
 
 export interface HijriDate {

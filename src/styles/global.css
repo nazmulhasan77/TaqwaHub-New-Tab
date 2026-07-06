@@ -24,6 +24,39 @@ body {
     radial-gradient(circle at 84% 0%, rgba(68, 139, 255, 0.55), transparent 28%),
     repeating-linear-gradient(132deg, rgba(103, 166, 255, 0.12) 0 1px, transparent 1px 9px),
     linear-gradient(135deg, #050914 0%, #08142a 54%, #04101b 100%);
+  transition: background 0.5s ease;
+}
+
+body.theme-ocean {
+  background:
+    radial-gradient(circle at 20% 80%, rgba(0, 149, 182, 0.6), transparent 25%),
+    radial-gradient(circle at 80% 20%, rgba(0, 200, 255, 0.5), transparent 30%),
+    repeating-linear-gradient(140deg, rgba(0, 180, 216, 0.15) 0 1px, transparent 1px 10px),
+    linear-gradient(135deg, #021a23 0%, #052c3f 50%, #01121a 100%);
+}
+
+body.theme-forest {
+  background:
+    radial-gradient(circle at 15% 85%, rgba(34, 139, 34, 0.55), transparent 25%),
+    radial-gradient(circle at 85% 15%, rgba(100, 200, 50, 0.4), transparent 30%),
+    repeating-linear-gradient(125deg, rgba(80, 200, 80, 0.12) 0 1px, transparent 1px 9px),
+    linear-gradient(135deg, #051a0a 0%, #0a2e12 50%, #031007 100%);
+}
+
+body.theme-sunset {
+  background:
+    radial-gradient(circle at 25% 75%, rgba(255, 94, 77, 0.5), transparent 25%),
+    radial-gradient(circle at 75% 25%, rgba(255, 165, 0, 0.5), transparent 30%),
+    repeating-linear-gradient(110deg, rgba(255, 140, 0, 0.15) 0 1px, transparent 1px 10px),
+    linear-gradient(135deg, #1a0510 0%, #3f1020 50%, #100208 100%);
+}
+
+body.theme-midnight {
+  background:
+    radial-gradient(circle at 10% 90%, rgba(75, 0, 130, 0.5), transparent 22%),
+    radial-gradient(circle at 90% 10%, rgba(0, 0, 139, 0.5), transparent 28%),
+    repeating-linear-gradient(135deg, rgba(100, 100, 200, 0.1) 0 1px, transparent 1px 8px),
+    linear-gradient(135deg, #000010 0%, #050525 50%, #000008 100%);
 }
 
 button,
