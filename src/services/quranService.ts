@@ -33,6 +33,10 @@ export async function getHourlyAyah(date = new Date()): Promise<QuranAyah> {
   return fromFallback(seed);
 }
 
+export async function getAyahForKey(key: string): Promise<QuranAyah> {
+  return fromFallback(`${key}:quran`);
+}
+
 export async function getRandomAyah(): Promise<QuranAyah> {
   return quranSamples[Math.floor(Math.random() * quranSamples.length)];
 }

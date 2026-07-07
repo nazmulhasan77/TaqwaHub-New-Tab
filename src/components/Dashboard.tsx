@@ -1,4 +1,4 @@
-import { getHourlyAsmaName } from '../data/asmaulHusna';
+import { getAsmaNameForKey } from '../data/asmaulHusna';
 import { prayerLabels } from '../data/translations';
 import { getUpcomingIslamicEvent } from '../services/eventService';
 import type { Language, PrayerTimes } from '../types';
@@ -9,12 +9,13 @@ interface Props {
   now: Date;
   language: Language;
   prayerTimes: PrayerTimes;
+  contentChangeKey: string;
 }
 
-export default function Dashboard({ now, language, prayerTimes }: Props) {
+export default function Dashboard({ now, language, prayerTimes, contentChangeKey }: Props) {
   const hijri = prayerTimes.hijri;
   const event = getUpcomingIslamicEvent(hijri, language);
-  const asmaName = getHourlyAsmaName(now);
+  const asmaName = getAsmaNameForKey(contentChangeKey);
   const { current } = getCurrentOrNextPrayer(prayerTimes, now);
   const next = getNextPrayer(prayerTimes, now);
   const countdown = secondsToClock((next.at.getTime() - now.getTime()) / 1000);

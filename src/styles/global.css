@@ -618,23 +618,33 @@ textarea {
 }
 
 .engine-row {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+  gap: 14px;
+  width: min(900px, 100%);
+  justify-self: center;
 }
 
 .engine {
-  min-width: 128px;
+  min-width: 0;
   padding: 0.52rem 0.8rem;
   font-size: 0.92rem;
   justify-content: space-between;
   display: flex;
   align-items: center;
+  gap: 10px;
   background: rgba(255, 255, 255, 0.08);
 }
 
+.engine span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .engine i {
+  flex: 0 0 auto;
   width: 14px;
   height: 14px;
   border-radius: 50%;
@@ -768,6 +778,7 @@ textarea {
 }
 
 .quote-card .arabic,
+.daily-word-card .arabic,
 .ayah-card .arabic {
   display: block;
   margin: 8px 0 12px;
@@ -810,6 +821,62 @@ textarea {
 
 .compact-quote .section-title {
   margin-bottom: 8px;
+}
+
+.daily-word-card {
+  display: grid;
+  gap: 14px;
+}
+
+.daily-word-card .section-title {
+  margin-bottom: 0;
+}
+
+.word-group {
+  display: grid;
+  gap: 5px;
+}
+
+.daily-word-card .word-group p {
+  display: block;
+  overflow: visible;
+  margin: 0;
+  -webkit-line-clamp: unset;
+  -webkit-box-orient: initial;
+}
+
+.daily-word-card .arabic {
+  margin: 2px 0;
+  text-align: left;
+  font-size: clamp(1.7rem, 2.7vw, 2.45rem);
+  line-height: 1.35;
+}
+
+.word-label {
+  color: rgba(238, 245, 255, 0.62);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.daily-word-card .ielts-word {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #f8fffd;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.ielts-word small {
+  border-radius: 999px;
+  padding: 0.2rem 0.48rem;
+  color: #d7e7ff;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
 .compact-quote .actions {
@@ -1346,9 +1413,9 @@ label input[type="checkbox"] {
 
 .app-footer {
   text-align: center;
-  padding: 16px;
+  padding: 8px 12px;
   color: rgba(255, 255, 255, 0.7);
-  font-size: 0.9rem;
+  font-size: 0.78rem;
   margin-top: auto;
 }
 

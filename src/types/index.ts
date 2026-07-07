@@ -2,6 +2,7 @@ export type Language = 'en' | 'bn';
 export type PrayerName = 'Fajr' | 'Dhuhr' | 'Asr' | 'Maghrib' | 'Isha';
 
 export type BackgroundTheme = 'default' | 'ocean' | 'forest' | 'sunset' | 'midnight';
+export type WordChangeInterval = 'daily' | '12h' | '6h' | '3h' | 'hourly';
 
 export interface Settings {
   city: string;
@@ -21,6 +22,7 @@ export interface Settings {
   customPrayerTimes: Record<PrayerName, string | null>;
   hijriAdjustment: number;
   backgroundTheme: BackgroundTheme;
+  wordChangeInterval: WordChangeInterval;
 }
 
 export interface HijriDate {

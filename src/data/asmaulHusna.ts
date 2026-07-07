@@ -1,3 +1,5 @@
+import { deterministicIndex } from '../utils/dateUtils';
+
 export interface AsmaName {
   arabic: string;
   english: string;
@@ -109,4 +111,8 @@ export const asmaulHusna: AsmaName[] = [
 export function getHourlyAsmaName(date = new Date()): AsmaName {
   const hourIndex = Math.floor(date.getTime() / 3_600_000) % asmaulHusna.length;
   return asmaulHusna[hourIndex];
+}
+
+export function getAsmaNameForKey(key: string): AsmaName {
+  return asmaulHusna[deterministicIndex(`${key}:asma`, asmaulHusna.length)];
 }

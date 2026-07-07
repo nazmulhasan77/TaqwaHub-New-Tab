@@ -23,7 +23,8 @@ export const defaultSettings: Settings = {
     Isha: null
   },
   hijriAdjustment: -1,
-  backgroundTheme: 'default'
+  backgroundTheme: 'default',
+  wordChangeInterval: 'daily'
 };
 
 const hasChromeStorage = () => typeof chrome !== 'undefined' && Boolean(chrome.storage?.local);

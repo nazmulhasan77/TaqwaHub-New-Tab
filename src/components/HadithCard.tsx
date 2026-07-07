@@ -1,5 +1,4 @@
 import type { Hadith, Language } from '../types';
-import { t } from '../utils/languageUtils';
 
 interface Props {
   hadith: Hadith;
@@ -11,7 +10,7 @@ export default function HadithCard({ hadith, language }: Props) {
   return (
     <section className="glass card quote-card compact-quote">
       <div className="section-title">
-        <span>{t(language, 'dailyHadith')}</span>
+        <span>Hadith</span>
       </div>
       <p>{text}</p>
       <small>{hadith.source}</small>

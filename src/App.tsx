@@ -14,8 +14,9 @@ import SalahTracker from './components/SalahTracker';
 import SearchBar from './components/SearchBar';
 import SettingsModal from './components/SettingsModal';
 import { hadithSamples } from './data/hadithSamples';
+import { vocabularyIntervalKey } from './data/dailyWords';
 import { getPrayerTimes } from './services/prayerService';
-import { getHourlyAyah, getRandomAyah } from './services/quranService';
+import { getAyahForKey } from './services/quranService';
 import { defaultSettings, getStored, setStored } from './services/storageService';
 import { schedulePrayerNotifications } from './services/notificationService';
 import type { Hadith, PrayerName, PrayerTimes, QuranAyah, Settings, Task } from './types';
@@ -35,7 +36,10 @@ export default function App() {
   const [dhikr, setDhikr] = useState<Record<string, number>>({});
   const [settingsOpen, setSettingsOpen] = useState(false);
   const today = dateKey(now);
-  const hourKey = now.toISOString().slice(0, 13);
+  const contentChangeKey = useMemo(
+    () => vocabularyIntervalKey(now, settings.wordChangeInterval),
+    [now, settings.wordChangeInterval]
+  );
 
   // Apply background theme
   useEffect(() => {
@@ -66,10 +70,13 @@ export default function App() {
       setTasks(await getStored(`tasks:${today}`, []));
       setNote(await getStored('quickNote', ''));
       setDhikr(await getStored(`dhikr:${today}`, {}));
-      setHadith(hadithSamples[deterministicIndex(`${hourKey}:hadith`, hadithSamples.length)]);
-      setAyah(await getHourlyAyah(now));
     })();
-  }, [today, hourKey]);
+  }, [today]);
+
+  useEffect(() => {
+    setHadith(hadithSamples[deterministicIndex(`${contentChangeKey}:hadith`, hadithSamples.length)]);
+    void getAyahForKey(contentChangeKey).then(setAyah);
+  }, [contentChangeKey]);
 
   useEffect(() => {
     if (settings.autoLocationEnabled && (!settings.latitude || !settings.longitude)) {
@@ -147,7 +154,7 @@ export default function App() {
 
         <div className="center-column">
           {prayerTimes ? (
-            <Dashboard now={now} language={settings.language} prayerTimes={prayerTimes} />
+            <Dashboard now={now} language={settings.language} prayerTimes={prayerTimes} contentChangeKey={contentChangeKey} />
           ) : (
             <section className="glass loading">Loading prayer dashboard...</section>
           )}
@@ -155,7 +162,7 @@ export default function App() {
         </div>
 
         <div className="right-column">
-          <AsmaulHusnaCard now={now} />
+          <AsmaulHusnaCard now={now} wordChangeInterval={settings.wordChangeInterval} />
           {settings.showQuran && ayah && <QuranCard ayah={ayah} language={settings.language} />}
           {settings.showHadith && <HadithCard hadith={hadith} language={settings.language} />}
         </div>

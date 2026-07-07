@@ -1,4 +1,4 @@
-import type { Settings, BackgroundTheme } from '../types';
+import type { Settings, BackgroundTheme, WordChangeInterval } from '../types';
 import LanguageToggle from './LanguageToggle';
 import { clearAllStored } from '../services/storageService';
 
@@ -39,6 +39,14 @@ const BACKGROUND_THEMES: { value: BackgroundTheme; label: string }[] = [
   { value: 'forest', label: 'Forest' },
   { value: 'sunset', label: 'Sunset' },
   { value: 'midnight', label: 'Midnight' },
+];
+
+const WORD_INTERVALS: { value: WordChangeInterval; label: string }[] = [
+  { value: 'daily', label: 'Daily' },
+  { value: '12h', label: 'Every 12 hours' },
+  { value: '6h', label: 'Every 6 hours' },
+  { value: '3h', label: 'Every 3 hours' },
+  { value: 'hourly', label: 'Hourly' },
 ];
 
 interface Props {
@@ -122,6 +130,15 @@ export default function SettingsModal({ open, settings, onClose, onSave }: Props
               {BACKGROUND_THEMES.map((theme) => (
                 <option key={theme.value} value={theme.value}>
                   {theme.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>Content Change
+            <select value={settings.wordChangeInterval} onChange={(e) => update('wordChangeInterval', e.target.value as WordChangeInterval)}>
+              {WORD_INTERVALS.map((interval) => (
+                <option key={interval.value} value={interval.value}>
+                  {interval.label}
                 </option>
               ))}
             </select>

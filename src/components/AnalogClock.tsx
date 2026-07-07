@@ -41,14 +41,12 @@ export default function AnalogClock({ now, clockMode, onClockModeChange }: Props
         <div className="digital-clock glass">
           <span>{new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(now)}</span>
           <strong>{formatClock(now, '12h')}</strong>
-          <small>{formatDate(now)}</small>
         </div>
       )}
 
       <div className="greeting">
-        <strong>Assalamu Alaikum 👋</strong>
+        <strong>Time is the best healer.</strong>
         <span>Have a blessed day!</span>
-        <small>Click here to edit</small>
       </div>
 
       <div className="date-pill">📅 {formatDate(now)}</div>
