@@ -13,6 +13,7 @@ import ProductivityTasks from './components/ProductivityTasks';
 import QuranCard from './components/QuranCard';
 import SalahTracker from './components/SalahTracker';
 import SearchBar from './components/SearchBar';
+import QuickLinks from './components/QuickLinks';
 import SettingsModal from './components/SettingsModal';
 import { hadithSamples } from './data/hadithSamples';
 import { vocabularyIntervalKey } from './data/dailyWords';
@@ -21,7 +22,7 @@ import { getAyahForKey } from './services/quranService';
 import { getDuaForKey } from './services/duaService';
 import { defaultSettings, getStored, setStored } from './services/storageService';
 import { schedulePrayerNotifications } from './services/notificationService';
-import type { Dua, Hadith, PrayerName, PrayerTimes, QuranAyah, Settings, Task } from './types';
+import type { Dua, Hadith, PrayerName, PrayerTimes, QuranAyah, Settings, Task, QuickLink } from './types';
 import { dateKey, deterministicIndex } from './utils/dateUtils';
 
 export default function App() {
@@ -155,6 +156,18 @@ export default function App() {
     void setStored('settings', next);
   };
 
+  const addQuickLink = () => {
+    const newLink: QuickLink = {
+      id: Date.now().toString(),
+      name: 'New Link',
+      url: 'https://',
+      icon: '🔗',
+      useFavicon: true
+    };
+    updateSettings({ ...settings, quickLinks: [...settings.quickLinks, newLink] });
+    setSettingsOpen(true);
+  };
+
   const togglePrayer = (name: PrayerName) => {
     setCompleted((items) => items.includes(name) ? items.filter((item) => item !== name) : [...items, name]);
   };
@@ -191,7 +204,8 @@ export default function App() {
           ) : (
             <section className="glass loading">Loading prayer dashboard...</section>
           )}
-          <SearchBar />
+          <SearchBar searchEngine={settings.searchEngine} />
+          <QuickLinks quickLinks={settings.quickLinks} onAddLink={addQuickLink} />
         </div>
 
         <div className="right-column">

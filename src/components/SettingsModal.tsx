@@ -1,4 +1,4 @@
-import type { Settings, BackgroundTheme, WordChangeInterval, Madhab } from '../types';
+import type { Settings, BackgroundTheme, WordChangeInterval, Madhab, SearchEngine, QuickLink } from '../types';
 import LanguageToggle from './LanguageToggle';
 import { clearAllStored } from '../services/storageService';
 
@@ -54,6 +54,13 @@ const MADHABS: { value: Madhab; label: string }[] = [
   { value: 'shafi', label: 'Shafi' },
 ];
 
+const SEARCH_ENGINES: { value: SearchEngine; label: string }[] = [
+  { value: 'google', label: 'Google' },
+  { value: 'bing', label: 'Bing' },
+  { value: 'brave', label: 'Brave' },
+  { value: 'duckduckgo', label: 'DuckDuckGo' },
+];
+
 interface Props {
   open: boolean;
   settings: Settings;
@@ -70,6 +77,27 @@ export default function SettingsModal({ open, settings, onClose, onSave }: Props
       ...settings.customPrayerTimes,
       [prayer]: time || null
     });
+  };
+
+  const addQuickLink = () => {
+    const newLink: QuickLink = {
+      id: Date.now().toString(),
+      name: 'New Link',
+      url: 'https://',
+      icon: '🔗',
+      useFavicon: true
+    };
+    update('quickLinks', [...settings.quickLinks, newLink]);
+  };
+
+  const removeQuickLink = (id: string) => {
+    update('quickLinks', settings.quickLinks.filter(link => link.id !== id));
+  };
+
+  const updateQuickLink = (id: string, field: keyof QuickLink, value: string | boolean) => {
+    update('quickLinks', settings.quickLinks.map(link =>
+      link.id === id ? { ...link, [field]: value } : link
+    ));
   };
   
   const requestLocation = async () => {
@@ -158,6 +186,55 @@ export default function SettingsModal({ open, settings, onClose, onSave }: Props
               ))}
             </select>
           </label>
+          <label>Search Engine
+            <select value={settings.searchEngine} onChange={(e) => update('searchEngine', e.target.value as SearchEngine)}>
+              {SEARCH_ENGINES.map((engine) => (
+                <option key={engine.value} value={engine.value}>
+                  {engine.label}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+        
+        <h4 style={{ margin: '20px 0 10px' }}>Quick Links</h4>
+        <div className="quick-links-settings">
+          {settings.quickLinks.map((link) => (
+            <div key={link.id} className="quick-link-item">
+              <input
+                type="text"
+                value={link.name}
+                onChange={(e) => updateQuickLink(link.id, 'name', e.target.value)}
+                placeholder="Name"
+                className="quick-link-input"
+              />
+              <input
+                type="text"
+                value={link.url}
+                onChange={(e) => updateQuickLink(link.id, 'url', e.target.value)}
+                placeholder="URL"
+                className="quick-link-input"
+              />
+              <input
+                type="text"
+                value={link.icon || ''}
+                onChange={(e) => updateQuickLink(link.id, 'icon', e.target.value)}
+                placeholder="Icon (emoji)"
+                className="quick-link-input quick-link-icon-input"
+                disabled={link.useFavicon}
+              />
+              <label className="quick-link-favicon-toggle">
+                <input
+                  type="checkbox"
+                  checked={link.useFavicon || false}
+                  onChange={(e) => updateQuickLink(link.id, 'useFavicon', e.target.checked)}
+                />
+                <span>Auto</span>
+              </label>
+              <button onClick={() => removeQuickLink(link.id)} className="quick-link-remove">×</button>
+            </div>
+          ))}
+          <button onClick={addQuickLink} className="quick-link-settings-add">+ Add Quick Link</button>
         </div>
         
         <h4 style={{ margin: '20px 0 10px' }}>Custom Prayer Times (Jamaat)</h4>

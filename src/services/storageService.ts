@@ -26,7 +26,14 @@ export const defaultSettings: Settings = {
   },
   hijriAdjustment: -1,
   backgroundTheme: 'default',
-  wordChangeInterval: 'hourly'
+  wordChangeInterval: 'hourly',
+  searchEngine: 'google',
+  quickLinks: [
+    { id: '1', name: 'Quran.com', url: 'https://quran.com', useFavicon: true },
+    { id: '2', name: 'Sunnah.com', url: 'https://sunnah.com', useFavicon: true },
+    { id: '3', name: 'YouTube', url: 'https://youtube.com', useFavicon: true },
+    { id: '4', name: 'GitHub', url: 'https://github.com', useFavicon: true }
+  ]
 };
 
 const hasChromeStorage = () => typeof chrome !== 'undefined' && Boolean(chrome.storage?.local);

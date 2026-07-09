@@ -1,21 +1,25 @@
 import { useState } from 'react';
+import type { SearchEngine } from '../types';
 
-const engines = {
-  Default: 'https://www.google.com/search?q=',
-  Google: 'https://www.google.com/search?q=',
-  Bing: 'https://www.bing.com/search?q=',
-  Brave: 'https://search.brave.com/search?q='
+const engines: Record<SearchEngine, string> = {
+  google: 'https://www.google.com/search?q=',
+  bing: 'https://www.bing.com/search?q=',
+  brave: 'https://search.brave.com/search?q=',
+  duckduckgo: 'https://duckduckgo.com/?q='
 };
 
-export default function SearchBar() {
+interface Props {
+  searchEngine: SearchEngine;
+}
+
+export default function SearchBar({ searchEngine }: Props) {
   const [query, setQuery] = useState('');
-  const [engine, setEngine] = useState<keyof typeof engines>('Default');
 
   const search = () => {
     const value = query.trim();
     if (!value) return;
     const looksLikeUrl = value.includes('.') && !value.includes(' ');
-    const target = looksLikeUrl ? `https://${value.replace(/^https?:\/\//, '')}` : `${engines[engine]}${encodeURIComponent(value)}`;
+    const target = looksLikeUrl ? `https://${value.replace(/^https?:\/\//, '')}` : `${engines[searchEngine]}${encodeURIComponent(value)}`;
     window.location.href = target;
   };
 
@@ -30,14 +34,6 @@ export default function SearchBar() {
           placeholder="Search the web or type a URL"
         />
         <button onClick={search}>Search</button>
-      </div>
-      <div className="engine-row">
-        {(Object.keys(engines) as Array<keyof typeof engines>).map((name) => (
-          <button key={name} className={engine === name ? 'engine active' : 'engine'} onClick={() => setEngine(name)}>
-            <span>{name}</span>
-            <i />
-          </button>
-        ))}
       </div>
     </section>
   );

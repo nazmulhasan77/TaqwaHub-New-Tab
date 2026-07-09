@@ -679,42 +679,140 @@ textarea {
   padding-inline: 26px;
 }
 
-.engine-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
-  gap: 14px;
+.quick-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
   width: min(900px, 100%);
-  justify-self: center;
+  margin: 16px auto 0;
 }
 
-.engine {
-  min-width: 0;
-  padding: 0.52rem 0.8rem;
-  font-size: 0.92rem;
-  justify-content: space-between;
+.quick-link {
   display: flex;
   align-items: center;
-  gap: 10px;
-  background: rgba(255, 255, 255, 0.08);
+  gap: 8px;
+  padding: 12px 20px;
+  text-decoration: none;
+  color: #eaf1ff;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  min-width: 100px;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  background: transparent;
 }
 
-.engine span {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.quick-link:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
 }
 
-.engine i {
-  flex: 0 0 auto;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.38);
+.quick-link-add {
+  border: 1px dashed rgba(255, 255, 255, 0.3);
 }
 
-.engine.active i {
-  background: #4f8cff;
+.quick-link-add:hover {
+  border-color: #3f7df2;
+  background: rgba(63, 125, 242, 0.2);
+}
+
+.quick-link-icon {
+  font-size: 1.2rem;
+}
+
+.quick-link-favicon {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  object-fit: contain;
+}
+
+.quick-link-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.quick-links-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.quick-link-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr 60px 50px 30px;
+  gap: 8px;
+  align-items: center;
+}
+
+.quick-link-input {
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: #eaf1ff;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.quick-link-input:focus {
+  outline: none;
+  border-color: #3f7df2;
+}
+
+.quick-link-icon-input {
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.quick-link-icon-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.quick-link-favicon-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: #eaf1ff;
+  cursor: pointer;
+}
+
+.quick-link-favicon-toggle input {
+  cursor: pointer;
+}
+
+.quick-link-remove {
+  background: rgba(255, 100, 100, 0.2);
+  border: none;
+  color: #ff6b6b;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 8px;
+  transition: background 0.2s;
+}
+
+.quick-link-remove:hover {
+  background: rgba(255, 100, 100, 0.4);
+}
+
+.quick-link-settings-add {
+  background: rgba(63, 125, 242, 0.2);
+  border: 1px solid #3f7df2;
+  color: #3f7df2;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.quick-link-settings-add:hover {
+  background: rgba(63, 125, 242, 0.3);
 }
 
 .weather-card {
