@@ -15,40 +15,55 @@ function daysUntilAiyameBij(hijri: HijriDate) {
   return days;
 }
 
+function isInAiyameBijPeriod(hijri: HijriDate): boolean {
+  // From 1st to 15th of every Arabic month is Aiyame Bij period
+  return hijri.day >= 1 && hijri.day <= 15;
+}
+
 export function getUpcomingIslamicEvent(hijri: HijriDate, language: Language) {
   const today = approxDayOfYear(hijri.monthNumber, hijri.day);
-  const aiyameBijDay = hijri.day >= 13 && hijri.day <= 15 ? hijri.day - 12 : null;
-  const recurringEvents = [
-    {
+  
+  // If we're in Aiyame Bij period (1st-15th), show Aiyame Bij countdown
+  if (isInAiyameBijPeriod(hijri)) {
+    const daysRemaining = 16 - hijri.day; // Days until end of Aiyame Bij
+    const dayOfAiyame = hijri.day;
+    return {
       id: 'aiyame-bij',
-      name: aiyameBijDay ? `Aiyame Bij Day ${aiyameBijDay}` : 'Aiyame Bij',
-      bnName: aiyameBijDay ? `আইয়ামে বীজ Day ${aiyameBijDay}` : 'আইয়ামে বীজ',
+      name: dayOfAiyame >= 13 ? `Aiyame Bij Day ${dayOfAiyame - 12}` : 'Aiyame Bij',
+      bnName: dayOfAiyame >= 13 ? `আইয়ামে বীজ Day ${dayOfAiyame - 12}` : 'আইয়ামে বীজ',
       month: hijri.monthNumber,
-      day: 13,
+      day: 1,
       type: 'range' as const,
       endDay: 15,
-      days: daysUntilAiyameBij(hijri)
-    }
-  ];
-  const events = [
-    ...islamicEvents.map((event) => {
-      let days = approxDayOfYear(event.month, event.day) - today;
-      if (days < 0) days += 354;
-      return { ...event, days };
-    }),
-    ...recurringEvents
-  ]
+      days: daysRemaining,
+      label: language === 'bn' ? `আইয়ামে বীজ (${daysRemaining} দিন বাকি)` : `Aiyame Bij (${daysRemaining} days left)`
+    };
+  }
+  
+  // Otherwise, show next Islamic event
+  const events = islamicEvents.map((event) => {
+    let days = approxDayOfYear(event.month, event.day) - today;
+    if (days < 0) days += 354;
+    return { ...event, days };
+  })
     .map((event) => ({ ...event, label: language === 'bn' ? event.bnName : event.name }))
     .sort((a, b) => a.days - b.days);
+  
   return events[0];
 }
 
 export function getAyyamReminder(hijri: HijriDate, language: Language): string | null {
   const d = hijri.day;
-  if ([13, 14, 15].includes(d)) {
-    return language === 'bn' ? 'আজ আইয়ামে বীজ রোজার দিন।' : 'Today is Ayyam al-Bid fasting day.';
+  // Aiyame Bij period: 1st-15th of every Arabic month
+  if (d >= 1 && d <= 15) {
+    const daysRemaining = 16 - d;
+    if (daysRemaining === 0) {
+      return language === 'bn' ? 'আজ আইয়ামে বীজ শেষ দিন।' : 'Today is the last day of Ayyam al-Bid.';
+    }
+    return language === 'bn' 
+      ? `আইয়ামে বীজ চলছে (${daysRemaining} দিন বাকি)` 
+      : `Ayyam al-Bid in progress (${daysRemaining} days left)`;
   }
-  if (d === 12) return language === 'bn' ? 'আগামীকাল আইয়ামে বীজ শুরু।' : 'Ayyam al-Bid starts tomorrow.';
-  if (d >= 10 && d <= 12) return language === 'bn' ? 'আইয়ামে বীজ শীঘ্রই আসছে।' : 'Ayyam al-Bid is coming soon.';
+  // 16-29: Show next Islamic event instead of Aiyame Bij reminders
   return null;
 }
