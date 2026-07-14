@@ -157,11 +157,11 @@ textarea {
   flex: 1;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 300px minmax(620px, 1fr) 310px;
+  grid-template-columns: 280px minmax(580px, 1fr) 290px;
   grid-template-rows: auto;
   grid-template-areas:
     "left center right";
-  gap: 22px;
+  gap: 18px;
   align-items: start;
   overflow: hidden;
 }
@@ -200,19 +200,19 @@ textarea {
 
 .analog-clock {
   position: relative;
-  width: 300px;
-  height: 300px;
-  margin: 20px auto 8px;
+  width: 240px;
+  height: 240px;
+  margin: 14px auto 6px;
   align-self: center;
   border-radius: 50%;
   background: radial-gradient(circle at 30% 30%, rgba(63, 125, 242, 0.2), rgba(8, 17, 34, 0.95));
-  border: 8px solid rgba(79, 140, 255, 0.8);
+  border: 6px solid rgba(79, 140, 255, 0.8);
   box-shadow: 
     0 0 0 5px rgba(255, 255, 255, 0.1),
     0 24px 60px rgba(0, 0, 0, 0.6),
     inset 0 0 40px rgba(0, 0, 0, 0.4);
-  --clock-radius: 150px;
-  --clock-diameter: 300px;
+  --clock-radius: 120px;
+  --clock-diameter: 240px;
 }
 
 .tick {
@@ -304,24 +304,24 @@ textarea {
 }
 
 .hand.hour {
-  width: 8px;
-  height: 75px;
-  margin-left: -4px;
+  width: 6px;
+  height: 60px;
+  margin-left: -3px;
   background: linear-gradient(to top, #f2f5ff, #b8cfff);
   z-index: 3;
 }
 
 .hand.minute {
-  width: 5px;
-  height: 105px;
-  margin-left: -2.5px;
+  width: 4px;
+  height: 85px;
+  margin-left: -2px;
   background: linear-gradient(to top, #f2f5ff, #90b4ff);
   z-index: 2;
 }
 
 .hand.second {
   width: 2px;
-  height: 120px;
+  height: 95px;
   margin-left: -1px;
   background: #3f7df2;
   z-index: 4;
@@ -331,15 +331,15 @@ textarea {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 20px;
-  height: 20px;
-  margin-left: -10px;
-  margin-top: -10px;
+  width: 16px;
+  height: 16px;
+  margin-left: -8px;
+  margin-top: -8px;
   border-radius: 50%;
   background: radial-gradient(circle, #7aa3ff, #3f7df2);
-  border: 4px solid rgba(255, 255, 0.8);
+  border: 3px solid rgba(255, 255, 0.8);
   z-index: 5;
-  box-shadow: 0 0 15px rgba(63, 125, 242, 0.6);
+  box-shadow: 0 0 12px rgba(63, 125, 242, 0.6);
 }
 
 .greeting {
@@ -372,17 +372,17 @@ textarea {
 }
 
 .digital-clock {
-  width: 250px;
-  padding: 26px 18px;
-  margin: 22px auto 8px;
-  border-radius: 24px;
+  width: 200px;
+  padding: 20px 14px;
+  margin: 18px auto 6px;
+  border-radius: 18px;
   display: grid;
-  gap: 6px;
+  gap: 4px;
   text-align: center;
 }
 
 .digital-clock strong {
-  font-size: 2.6rem;
+  font-size: 2rem;
   line-height: 1;
   color: #f4f8ff;
 }
@@ -390,7 +390,7 @@ textarea {
 .center-column {
   grid-area: center;
   display: grid;
-  gap: 18px;
+  gap: 14px;
 }
 
 .right-column {
@@ -646,25 +646,102 @@ textarea {
   transition: width 1s ease;
 }
 
+.barakah-actions {
+  width: min(710px, 100%);
+  margin: 0 auto 16px;
+}
+
+.barakah-title {
+  color: #eaf1ff;
+  font-size: 1rem;
+  margin-bottom: 12px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.barakah-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+}
+
+.barakah-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-align: left;
+}
+
+.barakah-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+.barakah-item.completed {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.barakah-item.completed:hover {
+  background: rgba(34, 197, 94, 0.2);
+}
+
+.barakah-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.barakah-text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.barakah-name {
+  color: #eaf1ff;
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.barakah-check {
+  font-size: 0.9rem;
+  color: rgba(234, 241, 255, 0.5);
+  flex-shrink: 0;
+}
+
+.barakah-item.completed .barakah-check {
+  color: #22c55e;
+}
+
 .quick-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 8px;
   justify-content: center;
-  width: min(900px, 100%);
-  margin: 16px auto 0;
+  width: min(710px, 100%);
+  margin: 12px auto 0;
 }
 
 .quick-link {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 12px 20px;
+  gap: 6px;
+  padding: 8px 14px;
   text-decoration: none;
   color: #eaf1ff;
-  border-radius: 12px;
+  border-radius: 8px;
   transition: all 0.2s ease;
-  min-width: 100px;
+  min-width: 80px;
   justify-content: center;
   border: none;
   cursor: pointer;
@@ -673,7 +750,7 @@ textarea {
 
 .quick-link:hover {
   background: rgba(255, 255, 255, 0.15);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
 .quick-link-add {
@@ -686,18 +763,18 @@ textarea {
 }
 
 .quick-link-icon {
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 .quick-link-favicon {
-  width: 24px;
-  height: 24px;
-  border-radius: 4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
   object-fit: contain;
 }
 
 .quick-link-name {
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   font-weight: 500;
 }
 

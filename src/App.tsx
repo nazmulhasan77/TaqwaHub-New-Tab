@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import AnalogClock from './components/AnalogClock';
 import AsmaulHusnaCard from './components/AsmaulHusnaCard';
+import BarakahActions, { BarakahAction } from './components/BarakahActions';
 import Dashboard from './components/Dashboard';
 import DhikrCounter from './components/DhikrCounter';
 import DuaCard from './components/DuaCard';
@@ -39,6 +40,12 @@ export default function App() {
   const [dhikr, setDhikr] = useState<Record<string, number>>({});
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [settingsLoaded, setSettingsLoaded] = useState(false);
+  const [barakahActions, setBarakahActions] = useState<BarakahAction[]>([
+    { id: 'quran-mushaf', name: 'Quran Mushaf', bnName: 'কুরআন মুশাফ', icon: '📖', completed: false },
+    { id: 'hadith', name: 'Hadith', bnName: 'হাদিস', icon: '🤲', completed: false },
+    { id: 'dua', name: 'Dua', bnName: 'দোয়া', icon: '🔤', completed: false },
+    { id: 'arabic', name: 'Word', bnName: 'শব্দ', icon: '🕌', completed: false },
+  ]);
   const today = dateKey(now);
   const contentChangeKey = useMemo(
     () => vocabularyIntervalKey(now, settings.wordChangeInterval),
@@ -149,6 +156,7 @@ export default function App() {
   useEffect(() => { void setStored(`tasks:${today}`, tasks); }, [tasks, today]);
   useEffect(() => { void setStored('quickNote', note); }, [note]);
   useEffect(() => { void setStored(`dhikr:${today}`, dhikr); }, [dhikr, today]);
+  useEffect(() => { void setStored(`barakah:${today}`, barakahActions); }, [barakahActions, today]);
 
   const updateSettings = (next: Settings) => {
     setSettings(next);
@@ -165,6 +173,12 @@ export default function App() {
     };
     updateSettings({ ...settings, quickLinks: [...settings.quickLinks, newLink] });
     setSettingsOpen(true);
+  };
+
+  const toggleBarakahAction = (id: string) => {
+    setBarakahActions(prev => prev.map(action =>
+      action.id === id ? { ...action, completed: !action.completed } : action
+    ));
   };
 
   const togglePrayer = (name: PrayerName) => {
@@ -203,6 +217,7 @@ export default function App() {
           ) : (
             <section className="glass loading">Loading prayer dashboard...</section>
           )}
+          <BarakahActions actions={barakahActions} onToggle={toggleBarakahAction} language={settings.language} />
           <QuickLinks quickLinks={settings.quickLinks} onAddLink={addQuickLink} />
         </div>
 
