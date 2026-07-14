@@ -1,4 +1,4 @@
-import type { Settings, BackgroundTheme, WordChangeInterval, Madhab, SearchEngine, QuickLink } from '../types';
+import type { Settings, BackgroundTheme, WordChangeInterval, Madhab, QuickLink } from '../types';
 import LanguageToggle from './LanguageToggle';
 import { clearAllStored } from '../services/storageService';
 
@@ -52,13 +52,6 @@ const WORD_INTERVALS: { value: WordChangeInterval; label: string }[] = [
 const MADHABS: { value: Madhab; label: string }[] = [
   { value: 'hanafi', label: 'Hanafi' },
   { value: 'shafi', label: 'Shafi' },
-];
-
-const SEARCH_ENGINES: { value: SearchEngine; label: string }[] = [
-  { value: 'google', label: 'Google' },
-  { value: 'bing', label: 'Bing' },
-  { value: 'brave', label: 'Brave' },
-  { value: 'duckduckgo', label: 'DuckDuckGo' },
 ];
 
 interface Props {
@@ -182,15 +175,6 @@ export default function SettingsModal({ open, settings, onClose, onSave }: Props
               {WORD_INTERVALS.map((interval) => (
                 <option key={interval.value} value={interval.value}>
                   {interval.label}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label>Search Engine
-            <select value={settings.searchEngine} onChange={(e) => update('searchEngine', e.target.value as SearchEngine)}>
-              {SEARCH_ENGINES.map((engine) => (
-                <option key={engine.value} value={engine.value}>
-                  {engine.label}
                 </option>
               ))}
             </select>

@@ -4,7 +4,6 @@ export type PrayerName = 'Fajr' | 'Dhuhr' | 'Asr' | 'Maghrib' | 'Isha';
 export type BackgroundTheme = 'default' | 'ocean' | 'forest' | 'sunset' | 'midnight';
 export type WordChangeInterval = 'daily' | '12h' | '6h' | '3h' | 'hourly';
 export type Madhab = 'hanafi' | 'shafi';
-export type SearchEngine = 'google' | 'bing' | 'brave' | 'duckduckgo';
 
 export interface QuickLink {
   id: string;
@@ -35,7 +34,6 @@ export interface Settings {
   hijriAdjustment: number;
   backgroundTheme: BackgroundTheme;
   wordChangeInterval: WordChangeInterval;
-  searchEngine: SearchEngine;
   quickLinks: QuickLink[];
 }
 

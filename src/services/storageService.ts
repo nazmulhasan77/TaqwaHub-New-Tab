@@ -27,7 +27,6 @@ export const defaultSettings: Settings = {
   hijriAdjustment: -1,
   backgroundTheme: 'default',
   wordChangeInterval: 'hourly',
-  searchEngine: 'google',
   quickLinks: [
     { id: '1', name: 'Quran.com', url: 'https://quran.com', useFavicon: true },
     { id: '2', name: 'Sunnah.com', url: 'https://sunnah.com', useFavicon: true },

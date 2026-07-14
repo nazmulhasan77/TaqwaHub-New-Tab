@@ -6,7 +6,7 @@
   "chrome_url_overrides": {
     "newtab": "index.html"
   },
-  "permissions": ["storage", "notifications", "alarms"],
+  "permissions": ["storage", "notifications", "alarms", "search"],
   "host_permissions": [
     "https://api.aladhan.com/*",
     "https://api.alquran.cloud/*",

@@ -204,7 +204,7 @@ export default function App() {
           ) : (
             <section className="glass loading">Loading prayer dashboard...</section>
           )}
-          <SearchBar searchEngine={settings.searchEngine} />
+          <SearchBar />
           <QuickLinks quickLinks={settings.quickLinks} onAddLink={addQuickLink} />
         </div>
 

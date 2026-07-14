@@ -1,26 +1,30 @@
 import { useState } from 'react';
-import type { SearchEngine } from '../types';
 
-const engines: Record<SearchEngine, string> = {
-  google: 'https://www.google.com/search?q=',
-  bing: 'https://www.bing.com/search?q=',
-  brave: 'https://search.brave.com/search?q=',
-  duckduckgo: 'https://duckduckgo.com/?q='
-};
-
-interface Props {
-  searchEngine: SearchEngine;
-}
-
-export default function SearchBar({ searchEngine }: Props) {
+export default function SearchBar() {
   const [query, setQuery] = useState('');
 
   const search = () => {
     const value = query.trim();
     if (!value) return;
+
+    // Check if it looks like a URL
     const looksLikeUrl = value.includes('.') && !value.includes(' ');
-    const target = looksLikeUrl ? `https://${value.replace(/^https?:\/\//, '')}` : `${engines[searchEngine]}${encodeURIComponent(value)}`;
-    window.location.href = target;
+    if (looksLikeUrl) {
+      const targetUrl = value.startsWith('http') ? value : `https://${value}`;
+      window.location.href = targetUrl;
+      return;
+    }
+
+    // Use Chrome Search API for web search
+    if (typeof chrome !== 'undefined' && chrome.search) {
+      chrome.search.query({
+        text: value,
+        disposition: 'CURRENT_TAB'
+      });
+    } else {
+      // Fallback to Google if Chrome API not available
+      window.location.href = `https://www.google.com/search?q=${encodeURIComponent(value)}`;
+    }
   };
 
   return (
